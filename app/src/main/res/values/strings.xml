@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">StockGame</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="owning">Owning</string>
+    <string name="watching">Watching</string>
+    <string name="investing">Investing:</string>
+    <string name="market_buy">Market Buy</string>
+    <string name="_0">0</string>
+    <string name="market_price">Market price</string>
+    <string name="estimated_cost">Estimated cost</string>
+    <string name="market_sell">Market Sell</string>
+    <string name="_8_shares">8 shares</string>
+    <string name="estimated_income">Estimated income</string>
+    <string name="stockgo">Stockgo</string>
+    <string name="statistic">Statistic</string>
+    <string name="open">Open</string>
+    <string name="today_s_high">Today\'s High</string>
+    <string name="today_s_low">Today\'s Low</string>
+    <string name="volume">Volume</string>
+
+    <string-array name="time_array">
+        <item>Live</item>
+        <item>Day</item>
+        <item>Month</item>
+        <item>Year</item>
+        <item>10 Years</item>
+    </string-array>
+
+    <string-array name="fund_array">
+        <item>Deposit</item>
+        <item>Withdraw</item>
+    </string-array>
+</resources>

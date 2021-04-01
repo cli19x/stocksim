@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "206863013629",
+    "firebase_url": "https://finalproject-9aeef.firebaseio.com",
+    "project_id": "finalproject-9aeef",
+    "storage_bucket": "finalproject-9aeef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206863013629:android:04126cc21d465862",
+        "android_client_info": {
+          "package_name": "com.example.stockgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206863013629-8khsdvnjo4fecsveaqse57s29mqsmkff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7WVwvP-h-zBu_H-4ilms4y7GgXiEZa2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206863013629-8khsdvnjo4fecsveaqse57s29mqsmkff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

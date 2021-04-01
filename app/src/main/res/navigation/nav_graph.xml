@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
+            app:startDestination="@id/listFragment">
+
+    <fragment android:id="@+id/listFragment" android:name="com.example.stockgame.ListFragment"
+              android:label="fragment_list" tools:layout="@layout/fragment_list">
+        <action android:id="@+id/action_listFragment_to_detailFragment" app:destination="@id/detailFragment"/>
+        <action android:id="@+id/action_listFragment_to_searchingFragment" app:destination="@id/searchingFragment"/>
+    </fragment>
+    <fragment android:id="@+id/detailFragment" android:name="com.example.stockgame.DetailFragment"
+              android:label="fragment_detail" tools:layout="@layout/fragment_detail">
+        <action android:id="@+id/action_detailFragment_to_listFragment" app:destination="@id/listFragment"/>
+        <action android:id="@+id/action_detailFragment_to_buyingFragment" app:destination="@id/buyingFragment"/>
+        <action android:id="@+id/action_detailFragment_to_sellingFragment" app:destination="@id/sellingFragment"/>
+    </fragment>
+    <fragment android:id="@+id/sellingFragment" android:name="com.example.stockgame.SellingFragment"
+              android:label="fragment_selling" tools:layout="@layout/fragment_selling">
+        <action android:id="@+id/action_sellingFragment_to_detailFragment" app:destination="@id/detailFragment"/>
+        <action android:id="@+id/action_sellingFragment_to_listFragment" app:destination="@id/listFragment"/>
+    </fragment>
+    <fragment android:id="@+id/buyingFragment" android:name="com.example.stockgame.BuyingFragment"
+              android:label="fragment_buying" tools:layout="@layout/fragment_buying">
+        <action android:id="@+id/action_buyingFragment_to_detailFragment" app:destination="@id/detailFragment"/>
+        <action android:id="@+id/action_buyingFragment_to_listFragment" app:destination="@id/listFragment"/>
+    </fragment>
+    <fragment android:id="@+id/searchingFragment" android:name="com.example.stockgame.SearchingFragment"
+              android:label="fragment_searching" tools:layout="@layout/fragment_searching">
+        <action android:id="@+id/action_searchingFragment_to_listFragment" app:destination="@id/listFragment"/>
+    </fragment>
+</navigation>
