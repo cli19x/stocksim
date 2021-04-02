@@ -26,6 +26,7 @@ import com.example.stock_watching.StockWatchingViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.gson.Gson
 import com.robinhood.ticker.TickerView
+import java.util.*
 
 class SellingFragment: Fragment() {
 
@@ -104,11 +105,11 @@ class SellingFragment: Fragment() {
 
         model = activity?.let { ViewModelProviders.of(it).get(StockWatchingViewModel::class.java) }!!
         model.allStocks.observe(
-            this,
+            viewLifecycleOwner,
             Observer<List<StockWatchingItem>> { stocks ->
                 stocks?.let {
                     it.forEach {
-                        if (it.symbol.toLowerCase() == item.symbol.toLowerCase()) {
+                        if (it.symbol.equals(item.symbol, ignoreCase = true)) {
                             liveItem = it
                             priceNow = it.lastSalePrice
                             (view.findViewById<TextView>(R.id.tv_sell_price)).text = "$$priceNow"

@@ -81,7 +81,7 @@ class SearchingFragment : Fragment(), SearchView.OnQueryTextListener  {
         modelSearch = activity?.let { ViewModelProviders.of(it).get(StockSearchViewModel::class.java) }!!
 
         modelSearch.searchingStocks!!.observe(
-            this,
+            viewLifecycleOwner,
             Observer<StockSearchList> { stocks ->
                 stocks?.let {
                     Log.d("searching", "-------------------1-----------------")

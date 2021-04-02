@@ -77,12 +77,12 @@ class ListFragment : Fragment() {
         )
         val tickerView:TickerView = v.findViewById(R.id.tv_list_ticker)
         val sparkView = v.findViewById(R.id.sparkview_list) as SparkView
-        sparkView.lineColor = ContextCompat.getColor(context!!, R.color.color_bg)
+        sparkView.lineColor = ContextCompat.getColor(requireContext(), R.color.color_bg)
         sparkView.lineWidth = 12f
         modelTwo = activity?.let { ViewModelProviders.of(it).get(StockWatchingViewModel::class.java) }!!
         modelThree = activity?.let { ViewModelProviders.of(it).get(StockGraphViewModel::class.java) }!!
         modelTwo.allStocks.observe(
-            this,
+            viewLifecycleOwner,
             Observer<List<StockWatchingItem>> { stocks ->
                 stocks?.let {
                     userWatchingList.clear()
@@ -124,7 +124,7 @@ class ListFragment : Fragment() {
             }
         )
         modelThree.allStocks.observe(
-            this,
+            viewLifecycleOwner,
             Observer<List<StockGraphItem>> { data ->
                 data?.let {
                     points.clear()
@@ -176,9 +176,9 @@ class ListFragment : Fragment() {
     }
 
     private fun setUpDialog() {
-        dialog = Dialog(activity!!)
+        dialog = Dialog(requireActivity())
         var dialogValue = 0
-        val view = activity!!.layoutInflater.inflate(R.layout.dialog_add_sub_fund, null)
+        val view = requireActivity().layoutInflater.inflate(R.layout.dialog_add_sub_fund, null)
         dialog.setContentView(view)
         dialog.setCanceledOnTouchOutside(true)
         dialog.window!!.setLayout(LinearLayout.LayoutParams.MATCH_PARENT , 1000)
@@ -196,7 +196,7 @@ class ListFragment : Fragment() {
 
         }
         ArrayAdapter.createFromResource(
-            activity!!,
+            requireActivity(),
             R.array.fund_array,
             R.layout.spinner_item
         ).also { adapter ->

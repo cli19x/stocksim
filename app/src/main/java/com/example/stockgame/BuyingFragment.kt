@@ -76,7 +76,7 @@ class BuyingFragment : Fragment() {
         item = gson.fromJson(this.arguments?.getString("item"), StockWatchingItem::class.java)
         modelOne = activity?.let { ViewModelProviders.of(it).get(UserViewModel::class.java) }!!
         modelOne.user.observe(
-            this,
+            viewLifecycleOwner,
             Observer<UserItem> { user ->
                 user?.let {
                     investing = it.investing
@@ -88,7 +88,7 @@ class BuyingFragment : Fragment() {
         (view.findViewById(R.id.tv_buying_price) as TextView).text = item.symbol
         modelTwo = activity?.let { ViewModelProviders.of(it).get(StockWatchingViewModel::class.java) }!!
         modelTwo.allStocks.observe(
-            this,
+            viewLifecycleOwner,
             Observer<List<StockWatchingItem>> { stocks ->
                 stocks?.let {
                     var temp = 0.0f

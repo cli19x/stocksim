@@ -54,7 +54,7 @@ class DetailFragment : Fragment() {
 
     @SuppressLint("RestrictedApi", "SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view:View = inflater.inflate(R.layout.fragment_detail, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_detail, container, false)
         val gson = Gson()
 
         view.setOnKeyListener(object : View.OnKeyListener {
@@ -66,12 +66,12 @@ class DetailFragment : Fragment() {
             }
         })
         item = gson.fromJson(this.arguments?.getString("stock_json"), StockWatchingItem::class.java)
-        type = this.arguments?.getInt("type")!!
+        type = requireArguments().getInt("type")
         print(type)
         (view.findViewById(R.id.tv_detail_ticker) as TickerView)
-            .setCharacterLists(item.lastSalePrice.toString())
+                .setCharacterLists(item.lastSalePrice.toString())
         (view.findViewById(R.id.tv_detail_ticker) as TickerView)
-            .text = item.lastSalePrice.toString()
+                .text = item.lastSalePrice.toString()
 
         view.findViewById<ImageButton>(R.id.ib_detail_home).setOnClickListener {
             view.findNavController().navigate(R.id.action_detailFragment_to_listFragment)
@@ -80,7 +80,7 @@ class DetailFragment : Fragment() {
         if (type == 2) {
             (view.findViewById<ImageView>(R.id.iv_detail_stop)).visibility = View.INVISIBLE
             (view.findViewById<FloatingActionButton>(R.id.fab_detail_sell)).visibility = View.VISIBLE
-        } else if (type == 1){
+        } else if (type == 1) {
             (view.findViewById<ImageView>(R.id.iv_detail_stop)).visibility = View.VISIBLE
             (view.findViewById<FloatingActionButton>(R.id.fab_detail_sell)).visibility = View.INVISIBLE
         }
@@ -89,14 +89,14 @@ class DetailFragment : Fragment() {
             val gson = Gson()
             val jsonString = gson.toJson(item)
             view.findNavController().navigate(
-                R.id.action_detailFragment_to_sellingFragment, bundleOf("item" to jsonString))
+                    R.id.action_detailFragment_to_sellingFragment, bundleOf("item" to jsonString))
         }
 
         view.findViewById<FloatingActionButton>(R.id.fab_detail_buy).setOnClickListener {
             val gson = Gson()
             val jsonString = gson.toJson(item)
             view.findNavController().navigate(
-                R.id.action_detailFragment_to_buyingFragment, bundleOf("item" to jsonString))
+                    R.id.action_detailFragment_to_buyingFragment, bundleOf("item" to jsonString))
         }
 
         (view.findViewById(R.id.tv_detail_sector) as TextView).text = item.sector
@@ -105,33 +105,33 @@ class DetailFragment : Fragment() {
         (view.findViewById(R.id.tv_detail_title) as TextView).text = "${item.symbol.toUpperCase()}:"
 
         val sparkView = view.findViewById(R.id.sparkview_detail) as SparkView
-        sparkView.lineColor = ContextCompat.getColor(context!!, R.color.color_bg)
+        sparkView.lineColor = ContextCompat.getColor(requireContext(), R.color.color_bg)
         sparkView.lineWidth = 12f
         model = activity?.let { ViewModelProviders.of(it).get(StockWatchingViewModel::class.java) }!!
         model.allStocks.observe(
-            this,
-            Observer<List<StockWatchingItem>> { stocks ->
-                stocks?.let {
-                    stocks.forEach {
-                        if (it.symbol.toLowerCase() == item.symbol.toLowerCase()) {
-                            priceNow = it.lastSalePrice
-                            (view.findViewById(R.id.tv_detail_ticker) as TickerView)
-                                .setCharacterLists(priceNow.toString())
-                            (view.findViewById(R.id.tv_detail_ticker) as TickerView)
-                                .text = "$$priceNow"
-                            val listType = object : TypeToken<ArrayList<Float>>() { }.type
-                            points = gson.fromJson<ArrayList<Float>>(item.histories, listType)
-                            sparkView.adapter = MyAdapter(points.toFloatArray())
-                            sparkView.adapter.notifyDataSetChanged()
-                        }
+                viewLifecycleOwner,
+                Observer<List<StockWatchingItem>> { stocks ->
+                    stocks?.let {
+                        stocks.forEach {
+                            if (it.symbol.toLowerCase() == item.symbol.toLowerCase()) {
+                                priceNow = it.lastSalePrice
+                                (view.findViewById(R.id.tv_detail_ticker) as TickerView)
+                                        .setCharacterLists(priceNow.toString())
+                                (view.findViewById(R.id.tv_detail_ticker) as TickerView)
+                                        .text = "$$priceNow"
+                                val listType = object : TypeToken<ArrayList<Float>>() {}.type
+                                points = gson.fromJson<ArrayList<Float>>(item.histories, listType)
+                                sparkView.adapter = MyAdapter(points.toFloatArray())
+                                sparkView.adapter.notifyDataSetChanged()
+                            }
 
+                        }
                     }
                 }
-            }
         )
         if (type == 2) {
             (view.findViewById<ImageView>(R.id.iv_detail_stop)).visibility = View.INVISIBLE
-        } else if (type == 1){
+        } else if (type == 1) {
             (view.findViewById<ImageView>(R.id.iv_detail_stop)).visibility = View.VISIBLE
         }
         (view.findViewById<ImageView>(R.id.iv_detail_stop)).setOnClickListener {
@@ -152,33 +152,33 @@ class DetailFragment : Fragment() {
         modelNews.refreshNews(item.symbol)
         Log.d("news", item.symbol)
         modelNews.allNews!!.observe(
-            this,
-            Observer<NewsList> { news ->
-                news?.let {
-                    newsList.clear()
-                    it.data.forEach {
-                        newsList.add(it)
+                viewLifecycleOwner,
+                Observer<NewsList> { news ->
+                    news?.let {
+                        newsList.clear()
+                        it.data.forEach {
+                            newsList.add(it)
+                        }
+                        viewAdapterNews.notifyDataSetChanged()
+                        recyclerViewNews.adapter = viewAdapterNews
                     }
-                    viewAdapterNews.notifyDataSetChanged()
-                    recyclerViewNews.adapter = viewAdapterNews
-                }
-            })
+                })
     }
 
 
     class RecyclerViewAdapterNews(
-        private var myDataSet: ArrayList<StockNewsItem>,
-        private val activity: SecondMainActivity
+            private var myDataSet: ArrayList<StockNewsItem>,
+            private val activity: SecondMainActivity
     ) :
-        RecyclerView.Adapter<RecyclerViewAdapterNews.ViewHolder>() {
+            RecyclerView.Adapter<RecyclerViewAdapterNews.ViewHolder>() {
 
 
         override fun onCreateViewHolder(
-            parent: ViewGroup,
-            viewType: Int
+                parent: ViewGroup,
+                viewType: Int
         ): RecyclerViewAdapterNews.ViewHolder {
             val v = LayoutInflater.from(parent.context)
-                .inflate(R.layout.stock_news_item, parent, false)
+                    .inflate(R.layout.stock_news_item, parent, false)
             return ViewHolder(v, activity)
         }
 
@@ -196,8 +196,8 @@ class DetailFragment : Fragment() {
                 val date: TextView = itemView.findViewById(R.id.tv_detail_news_date)
                 date.text = items.date
                 Glide.with(this.activity)
-                    .load(items.image_url)
-                    .apply(RequestOptions().override(300, 300)).into(itemView.findViewById(R.id.ib_detail_news_image))
+                        .load(items.image_url)
+                        .apply(RequestOptions().override(300, 300)).into(itemView.findViewById(R.id.ib_detail_news_image))
                 itemView.setOnClickListener {
                     if (!items.news_url.isNullOrEmpty()) {
                         val openURL = Intent(Intent.ACTION_VIEW)
