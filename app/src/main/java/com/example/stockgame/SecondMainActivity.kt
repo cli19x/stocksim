@@ -43,7 +43,7 @@ class SecondMainActivity : AppCompatActivity() {
         modelTwo = this.let { ViewModelProviders.of(it).get(StockWatchingViewModel::class.java) }
         modelTwo.allStocks.observe(
             this,
-            Observer<List<StockWatchingItem>> { stocks ->
+            { stocks ->
                 stocks?.let {
                     periodicWorkOne(it)
                     Log.d("hahahaMain","+++++++++++++++++++++++++++++++")

@@ -53,7 +53,7 @@ class DetailFragment : Fragment() {
     private var points = ArrayList<Float>()
 
     @SuppressLint("RestrictedApi", "SetTextI18n")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.fragment_detail, container, false)
         val gson = Gson()
 
@@ -102,7 +102,7 @@ class DetailFragment : Fragment() {
         (view.findViewById(R.id.tv_detail_sector) as TextView).text = item.sector
         (view.findViewById(R.id.tv_detail_security_type) as TextView).text = item.securityType
         (view.findViewById(R.id.tv_detail_volume) as TextView).text = item.volume.toString()
-        (view.findViewById(R.id.tv_detail_title) as TextView).text = "${item.symbol.toUpperCase()}:"
+        (view.findViewById(R.id.tv_detail_title) as TextView).text = "${item.symbol.toUpperCase(Locale.ROOT)}:"
 
         val sparkView = view.findViewById(R.id.sparkview_detail) as SparkView
         sparkView.lineColor = ContextCompat.getColor(requireContext(), R.color.color_bg)
@@ -113,7 +113,7 @@ class DetailFragment : Fragment() {
                 Observer<List<StockWatchingItem>> { stocks ->
                     stocks?.let {
                         stocks.forEach {
-                            if (it.symbol.toLowerCase() == item.symbol.toLowerCase()) {
+                            if (it.symbol.equals(item.symbol, ignoreCase = true)) {
                                 priceNow = it.lastSalePrice
                                 (view.findViewById(R.id.tv_detail_ticker) as TickerView)
                                         .setCharacterLists(priceNow.toString())

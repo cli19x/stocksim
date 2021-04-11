@@ -22,7 +22,7 @@ class StockSearchViewModel(application: Application): AndroidViewModel(applicati
 
     private var disposable: Disposable? = null
 
-    val searchingStocks: MutableLiveData<StockSearchList>? = MutableLiveData()
+    val searchingStocks: MutableLiveData<StockSearchList> = MutableLiveData()
 
 
     fun refreshStocks(str: String){
@@ -42,8 +42,8 @@ class StockSearchViewModel(application: Application): AndroidViewModel(applicati
 
     private fun showResult(result: StockSearchList?) {
         Log.d("hahat", result.toString())
-        searchingStocks!!.value =  null
-        searchingStocks!!.value = result
+        searchingStocks.value =  null
+        searchingStocks.value = result
     }
 
 
